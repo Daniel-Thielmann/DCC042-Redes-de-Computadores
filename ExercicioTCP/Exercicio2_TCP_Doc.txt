@@ -1,0 +1,83 @@
+DCC042 - Redes de Computadores
+Exercício 2 - Comunicação TCP (Chat Bidirecional)
+Aluno: Daniel Thielmann
+Data: 16/10/2025
+
+--------------------------------------------
+Descrição do Exercício
+--------------------------------------------
+O objetivo deste exercício é implementar uma aplicação cliente-servidor TCP que
+permita a comunicação bidirecional entre dois processos. Tanto o cliente quanto
+o servidor devem ser capazes de enviar e receber mensagens simultaneamente,
+simulando um pequeno sistema de chat em rede.
+
+Para isso, foram criados dois programas:
+1. TCPservidorEXERCICIO2.py
+2. TCPclienteEXERCICIO2.py
+
+--------------------------------------------
+Funcionamento Geral
+--------------------------------------------
+O servidor cria um socket TCP, associa-se a um endereço (127.0.0.1) e porta (34214),
+e fica aguardando a conexão de um cliente. Assim que o cliente se conecta, o servidor
+passa a trocar mensagens com ele de forma contínua até que uma das partes digite 'sair'
+ou 'exit'.
+
+Para permitir o envio e o recebimento de mensagens simultaneamente, o código faz uso
+de threads — uma thread fica responsável pela escuta de mensagens e outra pela entrada
+do usuário (envio).
+
+--------------------------------------------
+Passo a Passo de Execução
+--------------------------------------------
+1. Abra dois terminais (ou duas janelas do VS Code).
+2. No primeiro terminal, execute:
+       python TCPservidorEXERCICIO2.py
+3. No segundo terminal, execute:
+       python TCPclienteEXERCICIO2.py
+4. Assim que o cliente conectar, ambos poderão enviar mensagens livremente.
+5. Para encerrar, digite 'sair' em qualquer lado.
+
+--------------------------------------------
+Principais Funções
+--------------------------------------------
+Servidor:
+ - iniciar_servidor(): inicia o socket, aguarda conexão e cria uma thread para
+   receber mensagens do cliente.
+ - receber_mensagens(): função executada em thread para ouvir mensagens do cliente.
+
+Cliente:
+ - iniciar_cliente(): conecta-se ao servidor e cria uma thread para ouvir mensagens.
+ - ouvir_servidor(): função executada em thread para receber mensagens do servidor.
+
+--------------------------------------------
+Conceitos Aplicados
+--------------------------------------------
+- Modelo Cliente/Servidor em TCP
+- Criação e uso de sockets (socket.AF_INET, socket.SOCK_STREAM)
+- Funções: bind(), listen(), accept(), connect(), send(), recv(), close()
+- Threads para comunicação paralela (envio e recepção simultâneos)
+- Codificação e decodificação de mensagens (encode/decode)
+- Controle de encerramento com 'sair' ou 'exit'
+- Testes de porta e conexões com netstat
+
+--------------------------------------------
+Como testar a porta em uso
+--------------------------------------------
+No Windows:
+    netstat -a -n | findstr 34214
+
+No Linux/Mac:
+    netstat -an | grep 34214
+    ou
+    ss -ltnp | grep 34214
+
+--------------------------------------------
+Conclusão
+--------------------------------------------
+O exercício demonstra o funcionamento básico do protocolo TCP, incluindo
+a conexão orientada, o controle de fluxo, a entrega confiável de mensagens e a
+comunicação bidirecional. É uma base importante para compreender protocolos
+de aplicação como HTTP, SMTP e FTP.
+
+--------------------------------------------
